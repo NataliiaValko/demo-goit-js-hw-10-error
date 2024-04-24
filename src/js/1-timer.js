@@ -15,7 +15,7 @@ const refs = {
 let timerId = null;
 let userDate = null;
 
-refs.btnStart.disabled = true;
+// refs.btnStart.disabled = true;
 
 const options = {
   enableTime: true,
@@ -23,7 +23,7 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    if (!selectedDates[0] || selectedDates[0] <= options.defaultDate) {
+    if (!selectedDates[0] || selectedDates[0] < options.defaultDate) {
       iziToast.show({
         title: 'Error',
         message: 'Please choose a date in the future!',
@@ -32,8 +32,8 @@ const options = {
         messageColor: 'white',
         backgroundColor: 'red',
       });
-      refs.btnStart.disabled = true;
-      return;
+      // refs.btnStart.disabled = true;
+      // return;
     }
     refs.btnStart.disabled = false;
     userDate = selectedDates[0];
@@ -54,25 +54,25 @@ const getConvertMs = ms => {
   return { days, hours, minutes, seconds };
 };
 
-const addLeadingZero = value => {
-  return String(value).padStart(2, '0');
-};
+// const addLeadingZero = value => {
+//   return String(value).padStart(2, '0');
+// };
 
 const setTimeToHTML = differenceDate => {
   const { days, hours, minutes, seconds } = getConvertMs(differenceDate);
-  refs.days.textContent = addLeadingZero(days);
-  refs.hours.textContent = addLeadingZero(hours);
-  refs.minutes.textContent = addLeadingZero(minutes);
-  refs.seconds.textContent = addLeadingZero(seconds);
+  refs.days.textContent = days;
+  refs.hours.textContent = hours;
+  refs.minutes.textContent = minutes;
+  refs.seconds.textContent = seconds;
 };
 
 const onStartTimer = () => {
-  refs.btnStart.disabled = true;
-  refs.dateForm.disabled = true;
+  // refs.btnStart.disabled = true;
+  // refs.dateForm.disabled = true;
   timerId = setInterval(() => {
     const differenceDate = userDate - new Date();
     if (differenceDate <= 0) {
-      clearInterval(timerId);
+      // clearInterval(timerId);
       refs.dateForm.disabled = false;
       return;
     }

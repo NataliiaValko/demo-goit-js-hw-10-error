@@ -15,31 +15,38 @@ const promiseForm = document.querySelector('.form');
 
 const handleSubmit = event => {
   event.preventDefault();
-  const radioButtons = event.target.querySelectorAll('input[name="state"]');
+};
+
+const handleClick = event => {
+  // event.preventDefault();
+  const radioButtons = event.target
+    .closest('form')
+    .querySelectorAll('input[name="state"]');
   let state;
   radioButtons.forEach(radio => {
     if (radio.checked) {
       state = radio.value;
     }
   });
-  const delay = parseInt(event.target.elements.delay.value);
+  const delay = event.target.closest('form').elements.delay.value;
   const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (state === 'fulfilled') {
-        resolve(delay);
-      } else {
-        reject(delay);
-      }
-    }, delay);
+    // setTimeout(() => {
+    if (state === 'fulfilled') {
+      resolve(delay);
+    } else {
+      reject(delay);
+    }
+    // }, delay);
   });
 
   promise
     .then(delay => {
-      showMessage('Fulfilled', `✅ Fulfilled promise in ${delay}ms`);
+      console.log('Fulfilled', `✅ Fulfilled promise in ${delay}ms`);
     })
     .catch(delay => {
-      showMessage('Rejected', `❌ Rejected promise in ${delay}ms`);
+      console.log('Rejected', `❌ Rejected promise in ${delay}ms`);
     });
 };
 
-promiseForm.addEventListener('submit', handleSubmit);
+promiseForm.elements.button.addEventListener('submit', handleSubmit);
+promiseForm.elements.button.addEventListener('click', handleClick);
